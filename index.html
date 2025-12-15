@@ -33,35 +33,77 @@
         background-attachment: fixed;
       }
 
-      /* --- Header (Logos Left & Right) --- */
+      /* --- Header (Fixed for Mobile) --- */
       header {
         background: var(--white);
         padding: 1rem 2rem;
         border-bottom: 5px solid var(--primary-blue);
-        display: flex;
-        justify-content: space-between;
+        /* استخدام Grid للتحكم الكامل بالأماكن */
+        display: grid;
+        grid-template-columns: auto 1fr auto; /* شعار - عنوان - شعار */
         align-items: center;
+        gap: 20px;
       }
+
       .header-logo {
-        width: 80px; /* Adjust size */
+        width: 80px;
         height: 80px;
         object-fit: contain;
-        /* Placeholder background */
-        background: #eee;
-        border-radius: 50%;
+        background: #fff;
       }
+
       .header-title {
         text-align: center;
       }
       .header-title h1 {
         margin: 0;
         color: var(--primary-blue);
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
       .header-title p {
         margin: 5px 0 0;
         color: #666;
         font-weight: bold;
+        font-size: 0.9rem;
+      }
+
+      /* --- حل مشكلة الموبايل (Responsive Header) --- */
+      @media (max-width: 768px) {
+        header {
+          /* تقسيم الهيدر لصفين في الموبايل */
+          grid-template-columns: 1fr 1fr; /* عمودين متساويين */
+          grid-template-rows: auto auto; /* صفين */
+          padding: 1rem;
+          gap: 10px;
+        }
+
+        /* الشعار الأول (يسار) */
+        .logo-left {
+          grid-column: 1 / 2;
+          grid-row: 1;
+          justify-self: start; /* محاذاة لليسار */
+          width: 60px;
+          height: 60px;
+        }
+
+        /* الشعار الثاني (يمين) */
+        .logo-right {
+          grid-column: 2 / 3;
+          grid-row: 1;
+          justify-self: end; /* محاذاة لليمين */
+          width: 60px;
+          height: 60px;
+        }
+
+        /* العنوان ينزل تحتهم */
+        .header-title {
+          grid-column: 1 / 3; /* يأخذ العرض كامل */
+          grid-row: 2;
+          margin-top: 10px;
+        }
+        .header-title h1 {
+          font-size: 1.4rem;
+        }
       }
 
       /* --- Navigation Bar --- */
@@ -76,12 +118,10 @@
       nav a {
         color: white;
         text-decoration: none;
-        margin: 0 20px;
+        margin: 0 15px;
         font-weight: bold;
-        font-size: 1.1rem;
-      }
-      nav a:hover {
-        text-decoration: underline;
+        font-size: 1rem;
+        display: inline-block;
       }
 
       /* --- Container --- */
@@ -93,18 +133,18 @@
 
       .section-card {
         background: var(--white);
-        padding: 40px;
-        margin-bottom: 40px;
+        padding: 30px;
+        margin-bottom: 30px;
         border-radius: 12px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
       }
 
-      /* --- Triad Buttons (With Small Icons) --- */
+      /* --- Triad Buttons --- */
       .triad-nav-container {
         display: flex;
         justify-content: center;
-        gap: 30px;
-        margin: 40px 0;
+        gap: 20px;
+        margin: 30px 0;
         flex-wrap: wrap;
       }
       .triad-btn {
@@ -112,27 +152,20 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 140px;
-        height: 140px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
         color: white;
         text-decoration: none;
         font-weight: bold;
-        transition: transform 0.3s, box-shadow 0.3s;
         text-align: center;
-        border: 4px solid white;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-size: 0.9rem;
       }
-      .triad-btn:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Small Icons inside buttons */
       .btn-icon {
-        font-size: 2rem;
-        margin-bottom: 10px;
-      } /* Using FontAwesome size */
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
 
       .bg-phy {
         background: linear-gradient(135deg, #3498db, #2980b9);
@@ -144,19 +177,17 @@
         background: linear-gradient(135deg, #2ecc71, #27ae60);
       }
 
-      /* --- Detailed Sections (Image + Text) --- */
+      /* --- Detailed Sections --- */
       .detail-row {
         display: flex;
         align-items: flex-start;
-        gap: 30px;
+        gap: 20px;
       }
       .large-section-img {
-        width: 200px;
-        height: auto;
+        width: 100%;
+        max-width: 180px;
         border-radius: 10px;
         border: 1px solid #ddd;
-        padding: 5px;
-        background: #fff;
       }
       @media (max-width: 768px) {
         .detail-row {
@@ -164,27 +195,20 @@
           text-align: center;
         }
         .large-section-img {
-          width: 100%;
-          max-width: 250px;
-          margin: 0 auto;
-        }
-        header {
-          flex-direction: column;
-          gap: 10px;
+          margin: 0 auto 20px auto;
         }
       }
 
-      /* --- Video Container --- */
+      /* --- Video --- */
       .video-wrapper {
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        padding-bottom: 56.25%;
         height: 0;
         background: #000;
         border-radius: 10px;
         overflow: hidden;
         margin-top: 20px;
       }
-      .video-wrapper iframe,
       .video-wrapper video {
         position: absolute;
         top: 0;
@@ -193,31 +217,54 @@
         height: 100%;
       }
 
-      /* --- Footer --- */
-      footer {
-        background: #2c3e50;
-        color: #ecf0f1;
-        padding: 40px 20px;
+      /* --- Team Section (New) --- */
+      .team-section {
+        background: #2c3e50; /* لون غامق مميز */
+        color: white;
         text-align: center;
+        padding: 40px 20px;
+        margin-top: 50px;
+        border-top: 5px solid #f1c40f; /* خط ذهبي فاصل */
       }
-      .footer-section {
+      .team-title {
+        color: #f1c40f; /* لون ذهبي للعنوان */
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .supervisor-box {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 8px;
         margin-bottom: 20px;
-        border-bottom: 1px solid #34495e;
-        padding-bottom: 20px;
+        display: inline-block;
+        min-width: 250px;
       }
-      .footer-section:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
+      .students-list {
+        list-style: none;
+        padding: 0;
+        font-size: 1.1rem;
       }
-      .ref-text {
-        font-size: 0.85rem;
+      .students-list li {
+        margin: 5px 0;
+      }
+
+      footer {
+        background: #1a252f;
         color: #bdc3c7;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.8rem;
       }
     </style>
   </head>
   <body>
     <header>
-      <img src="college-logo.png" alt="College Logo" class="header-logo" />
+      <img
+        src="college-logo.png"
+        alt="College Logo"
+        class="header-logo logo-left"
+      />
 
       <div class="header-title">
         <h1>PICS Guide</h1>
@@ -227,51 +274,50 @@
       <img
         src="university-logo.png"
         alt="University Logo"
-        class="header-logo"
+        class="header-logo logo-right"
       />
     </header>
 
     <nav>
       <a href="#about">About</a>
-      <a href="#symptoms">The Triad</a>
-      <a href="#management">Management</a>
+      <a href="#symptoms">Triad</a>
+      <a href="#management">MGT</a>
+      <a href="#team">Team</a>
     </nav>
 
     <div class="container">
       <div id="about" class="section-card">
         <h2 style="color: var(--primary-blue)">What is PICS?</h2>
-        [span_0](start_span)
         <p>
           <strong>Definition:</strong> PICS refers to new or worsening
           impairments in physical, cognitive, or mental health status arising
-          after critical illness and persisting beyond acute care
-          hospitalization[span_0](end_span).
+          after critical illness.
         </p>
-        [span_1](start_span)
-        <p>
-          <strong>Impact:</strong> Approximately <strong>50–70%</strong> of ICU
-          survivors experience at least one PICS impairment[span_1](end_span).
-        </p>
+        <div
+          style="
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-blue);
+          "
+        >
+          <strong>Impact:</strong> 50–70% of ICU survivors are affected.
+        </div>
       </div>
 
       <div id="symptoms" style="text-align: center">
-        <h3>Select a Component to Learn More:</h3>
+        <h3>Core Components:</h3>
       </div>
 
       <div class="triad-nav-container">
         <a href="#physical-detail" class="triad-btn bg-phy">
-          <i class="fas fa-running btn-icon"></i>
-          Physical
+          <i class="fas fa-running btn-icon"></i> Physical
         </a>
-
         <a href="#cognitive-detail" class="triad-btn bg-cog">
-          <i class="fas fa-brain btn-icon"></i>
-          Cognitive
+          <i class="fas fa-brain btn-icon"></i> Cognitive
         </a>
-
         <a href="#psychological-detail" class="triad-btn bg-psy">
-          <i class="fas fa-head-side-virus btn-icon"></i>
-          Psychological
+          <i class="fas fa-head-side-virus btn-icon"></i> Psych
         </a>
       </div>
 
@@ -282,24 +328,15 @@
       >
         <img
           src="physical-illustration.jpg"
-          alt="Physical Weakness Illustration"
+          alt="Physical"
           class="large-section-img"
         />
         <div>
-          <h3 style="color: #3498db; margin-top: 0">Physical Impairments</h3>
-          [span_2](start_span)
-          <p>
-            Primarily related to ICU-acquired weakness and muscle
-            wasting[span_2](end_span).
-          </p>
+          <h3 style="color: #3498db">Physical Impairments</h3>
           <ul>
-            <li>Generalized weakness & fatigue.</li>
-            [span_3](start_span)
-            <li>
-              Difficulty with activities of daily living
-              (ADLs)[span_3](end_span).
-            </li>
-            <li>Reduced exercise tolerance.</li>
+            <li>ICU-acquired weakness.</li>
+            <li>Reduced endurance.</li>
+            <li>Difficulty with daily activities.</li>
           </ul>
         </div>
       </div>
@@ -311,21 +348,15 @@
       >
         <img
           src="cognitive-illustration.jpg"
-          alt="Cognitive Illustration"
+          alt="Cognitive"
           class="large-section-img"
         />
         <div>
-          <h3 style="color: #e67e22; margin-top: 0">Cognitive Impairments</h3>
-          [span_4](start_span)
-          <p>
-            Associated with hypoxia, delirium, and metabolic
-            disturbances[span_4](end_span). Symptoms include:
-          </p>
+          <h3 style="color: #e67e22">Cognitive Impairments</h3>
           <ul>
             <li>Memory deficits.</li>
-            [span_5](start_span)
-            <li>Reduced attention span[span_5](end_span).</li>
-            <li>Slower mental processing speed.</li>
+            <li>Poor concentration.</li>
+            <li>Slower processing speed.</li>
           </ul>
         </div>
       </div>
@@ -337,42 +368,26 @@
       >
         <img
           src="psychological-illustration.jpg"
-          alt="Psychological Illustration"
+          alt="Psychological"
           class="large-section-img"
         />
         <div>
-          <h3 style="color: #2ecc71; margin-top: 0">
-            Psychological Impairments
-          </h3>
-          [span_6](start_span)
-          <p>
-            Arise from the traumatic nature of critical
-            illness[span_6](end_span). Common issues:
-          </p>
+          <h3 style="color: #2ecc71">Psychological Impairments</h3>
           <ul>
-            [span_7](start_span)
-            <li>Anxiety & Depression[span_7](end_span).</li>
-            <li>PTSD (Nightmares, Flashbacks).</li>
+            <li>Anxiety & Depression.</li>
+            <li>PTSD symptoms.</li>
           </ul>
-          [span_8](start_span)
-          <p>
-            <em
-              >Note: This can also affect family members
-              (PICS-Family)[span_8](end_span).</em
-            >
-          </p>
         </div>
       </div>
 
       <div id="management" class="section-card">
-        <h2 style="color: var(--primary-blue)">Management & Nursing Role</h2>
-        [span_9](start_span)
+        <h2 style="color: var(--primary-blue)">Management</h2>
         <p>
-          Management requires a multidisciplinary approach including early
-          mobilization and patient education[span_9](end_span).
+          Multidisciplinary approach: Early mobilization, Education, and
+          Follow-up.
         </p>
 
-        <h4 style="margin-top: 30px">Watch: PICS Management Overview</h4>
+        <h4>Watch: Management Overview</h4>
         <div class="video-wrapper">
           <video controls>
             <source src="management-video.mp4" type="video/mp4" />
@@ -382,29 +397,31 @@
       </div>
     </div>
 
-    <footer>
-      <div class="footer-section">
-        <h3>Prepared By:</h3>
-        <p>
-          Master of Critical Care Nursing Students<br />Al al-Bayt University
-          (AABU) - 2025
-        </p>
+    <div id="team" class="team-section">
+      <h2 class="team-title">Project Team</h2>
+
+      <div class="supervisor-box">
+        <small>Under the Supervision of:</small><br />
+        <strong style="font-size: 1.2rem"
+          >Dr. [Write Doctor's Name Here]</strong
+        >
       </div>
 
-      <div class="footer-section">
-        <h4>Selected References:</h4>
-        <p class="ref-text">
-          1. Needham, D. M., et al. (2012). Improving long-term outcomes after
-          discharge from intensive care unit. [span_10](start_span)<em
-            >Critical Care Medicine</em
-          >.[span_10](end_span)<br />
-          2. Inoue, S., et al. (2019). [span_11](start_span)Post-intensive care
-          syndrome: Its pathophysiology, prevention, and future
-          directions.[span_11](end_span)<br />
-          3. Rawal, G., et al. (2017). [span_12](start_span)Post-intensive care
-          syndrome: An overview.[span_12](end_span)
-        </p>
+      <br />
+
+      <div style="margin-top: 10px">
+        <small>Prepared by Master Students:</small>
+        <ul class="students-list">
+          <li>Student Name 1</li>
+          <li>Student Name 2</li>
+          <li>Student Name 3</li>
+        </ul>
       </div>
+    </div>
+
+    <footer>
+      <p>References: Needham et al. (2012); Inoue et al. (2019)</p>
+      <p>&copy; 2025 Al al-Bayt University</p>
     </footer>
   </body>
 </html>
