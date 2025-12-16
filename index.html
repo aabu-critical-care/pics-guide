@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PICS Guide - AABU Master Program</title>
+    <title>PICS Project</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Tajawal:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -17,134 +17,275 @@
       /* --- Color Variables --- */
       :root {
         --primary-blue: #0056b3;
-        --accent-teal: #17a2b8;
-        --soft-bg: #f4f6f9;
-        --text-dark: #333;
         --white: #ffffff;
+        --text-dark: #2c3e50;
+        --gold: #f1c40f;
+
+        --color-phy: #3498db;
+        --color-cog: #e67e22;
+        --color-psy: #2ecc71;
+        --color-soc: #9b59b6;
+
+        --bg-soft: #f8fbff;
       }
 
       /* --- Global Styles --- */
       body {
         font-family: "Roboto", sans-serif;
-        line-height: 1.6;
+        line-height: 1.8;
         color: var(--text-dark);
         margin: 0;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-color: var(--bg-soft);
+        background-image: radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 86, 179, 0.03) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(230, 126, 34, 0.03) 0%,
+            transparent 50%
+          );
         background-attachment: fixed;
+        transition: all 0.3s ease;
       }
 
-      /* --- Header (Fixed for Mobile) --- */
+      /* Arabic Override */
+      body.rtl {
+        font-family: "Tajawal", sans-serif;
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* --- Language Button --- */
+      .lang-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1100;
+        background: var(--gold);
+        color: #333;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-family: inherit;
+      }
+
+      body.rtl .lang-btn {
+        right: auto;
+        left: 20px;
+      }
+
+      /* --- Header (Desktop Layout) --- */
       header {
         background: var(--white);
-        padding: 1rem 2rem;
+        padding: 1.5rem 2rem;
         border-bottom: 5px solid var(--primary-blue);
-        /* استخدام Grid للتحكم الكامل بالأماكن */
         display: grid;
-        grid-template-columns: auto 1fr auto; /* شعار - عنوان - شعار */
+        grid-template-columns: 100px 1fr 100px;
         align-items: center;
         gap: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
       }
 
       .header-logo {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         object-fit: contain;
-        background: #fff;
       }
 
-      .header-title {
-        text-align: center;
+      .header-center {
+        padding: 0 10px;
       }
-      .header-title h1 {
+
+      .main-title {
         margin: 0;
         color: var(--primary-blue);
-        font-size: 1.8rem;
-      }
-      .header-title p {
-        margin: 5px 0 0;
-        color: #666;
-        font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 3rem;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: 2px;
+        line-height: 1.1;
       }
 
-      /* --- حل مشكلة الموبايل (Responsive Header) --- */
-      @media (max-width: 768px) {
+      .sub-title {
+        margin: 10px 0 0;
+        color: #d35400;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      /* --- Mobile Header Layout (Logos Top, Title Bottom) --- */
+      @media (max-width: 900px) {
         header {
-          /* تقسيم الهيدر لصفين في الموبايل */
-          grid-template-columns: 1fr 1fr; /* عمودين متساويين */
-          grid-template-rows: auto auto; /* صفين */
+          grid-template-columns: 1fr 1fr; /* Split top into 2 for logos */
+          grid-template-rows: auto auto; /* Row 1: Logos, Row 2: Title */
           padding: 1rem;
           gap: 10px;
         }
 
-        /* الشعار الأول (يسار) */
+        /* Force logos to top row */
         .logo-left {
           grid-column: 1 / 2;
           grid-row: 1;
-          justify-self: start; /* محاذاة لليسار */
-          width: 60px;
-          height: 60px;
+          justify-self: start;
+          width: 80px;
+          height: 80px;
         }
-
-        /* الشعار الثاني (يمين) */
         .logo-right {
           grid-column: 2 / 3;
           grid-row: 1;
-          justify-self: end; /* محاذاة لليمين */
-          width: 60px;
-          height: 60px;
+          justify-self: end;
+          width: 80px;
+          height: 80px;
         }
 
-        /* العنوان ينزل تحتهم */
-        .header-title {
-          grid-column: 1 / 3; /* يأخذ العرض كامل */
+        /* Force Title to bottom row, spanning full width */
+        .header-center {
+          grid-column: 1 / 3;
           grid-row: 2;
-          margin-top: 10px;
+          margin-top: 15px;
         }
-        .header-title h1 {
-          font-size: 1.4rem;
+
+        .main-title {
+          font-size: 1.8rem;
+        }
+        .sub-title {
+          font-size: 1.1rem;
+        }
+
+        /* Adjust Lang Button for Mobile */
+        .lang-btn {
+          top: auto;
+          bottom: 20px;
+          right: 20px;
+          padding: 8px 16px;
+          font-size: 0.9rem;
+          opacity: 0.9;
+        }
+        body.rtl .lang-btn {
+          left: 20px;
+          right: auto;
         }
       }
 
-      /* --- Navigation Bar --- */
+      /* --- Navigation --- */
       nav {
         background: var(--primary-blue);
-        padding: 10px;
+        padding: 15px;
         text-align: center;
         position: sticky;
         top: 0;
         z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       }
       nav a {
         color: white;
         text-decoration: none;
         margin: 0 15px;
-        font-weight: bold;
-        font-size: 1rem;
+        font-weight: 600;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        transition: color 0.3s;
         display: inline-block;
+      }
+      nav a:hover {
+        color: var(--gold);
+        text-decoration: underline;
       }
 
       /* --- Container --- */
       .container {
-        max-width: 900px;
-        margin: 30px auto;
+        max-width: 1200px;
+        margin: 50px auto;
         padding: 0 20px;
       }
 
       .section-card {
         background: var(--white);
-        padding: 30px;
-        margin-bottom: 30px;
+        padding: 50px;
+        margin-bottom: 50px;
         border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #eee;
       }
 
-      /* --- Triad Buttons --- */
+      h2 {
+        color: var(--primary-blue);
+        font-weight: 800;
+        font-size: 2rem;
+        border-bottom: 3px solid #f1f1f1;
+        padding-bottom: 15px;
+        margin-top: 0;
+        margin-bottom: 25px;
+      }
+
+      p {
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 1.1rem;
+      }
+
+      body.rtl p {
+        text-align: justify;
+      }
+
+      /* --- Etiology (Risk Factors) --- */
+      .risk-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-top: 30px;
+      }
+      .risk-col {
+        padding: 30px;
+        border-radius: 12px;
+        background: #fdfdfd;
+        border: 1px solid #e0e0e0;
+      }
+      .risk-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid;
+      }
+      .risk-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .risk-content ul {
+        padding-left: 20px;
+        color: #444;
+        font-size: 1.05rem;
+      }
+
+      body.rtl .risk-content ul {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+
+      .risk-content li {
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: 850px) {
+        .risk-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* --- Manifestations (Triad) --- */
       .triad-nav-container {
         display: flex;
         justify-content: center;
-        gap: 20px;
-        margin: 30px 0;
+        gap: 30px;
+        margin: 40px 0;
         flex-wrap: wrap;
       }
       .triad-btn {
@@ -152,19 +293,20 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 120px;
-        height: 120px;
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
-        color: white;
         text-decoration: none;
         font-weight: bold;
         text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        font-size: 0.9rem;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        color: white;
+        transition: all 0.3s;
+        border: 5px solid white;
       }
-      .btn-icon {
-        font-size: 1.8rem;
-        margin-bottom: 5px;
+      .triad-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
       }
 
       .bg-phy {
@@ -176,19 +318,49 @@
       .bg-psy {
         background: linear-gradient(135deg, #2ecc71, #27ae60);
       }
+      .btn-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: white;
+      }
 
-      /* --- Detailed Sections --- */
+      /* Detail Blocks */
       .detail-row {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
+        gap: 40px;
+        padding: 40px;
+        margin-bottom: 30px;
+        border-radius: 10px;
       }
+
       .large-section-img {
         width: 100%;
-        max-width: 180px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
+        max-width: 350px;
+        border: none;
+        background: transparent;
+        padding: 0;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
       }
+
+      .detail-content h3 {
+        margin-top: 0;
+        font-size: 1.8rem;
+      }
+      .detail-content ul {
+        color: #444;
+        padding-left: 20px;
+        font-size: 1.1rem;
+      }
+      body.rtl .detail-content ul {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+      .detail-content li {
+        margin-bottom: 12px;
+      }
+
       @media (max-width: 768px) {
         .detail-row {
           flex-direction: column;
@@ -199,78 +371,201 @@
         }
       }
 
-      /* --- Video --- */
-      .video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        background: #000;
+      /* --- Social Health --- */
+      .social-card {
+        background-color: #fff;
+        border-top: 6px solid #9b59b6;
+        padding: 40px;
         border-radius: 10px;
-        overflow: hidden;
-        margin-top: 20px;
-      }
-      .video-wrapper video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        margin-top: 40px;
+        margin-bottom: 50px;
       }
 
-      /* --- Team Section (New) --- */
+      /* --- Management Grid --- */
+      .mgt-intro {
+        background: #fdfdfd;
+        padding: 30px;
+        border-left: 6px solid var(--primary-blue);
+        margin-bottom: 40px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      body.rtl .mgt-intro {
+        border-left: none;
+        border-right: 6px solid var(--primary-blue);
+      }
+
+      .mgt-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 30px;
+      }
+      @media (max-width: 900px) {
+        .mgt-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .mgt-card {
+        background: #fff;
+        border: 1px solid #e1e1e1;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: left;
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+      }
+      body.rtl .mgt-card {
+        text-align: right;
+      }
+
+      .mgt-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        border-color: var(--primary-blue);
+      }
+      .mgt-icon {
+        font-size: 3rem;
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        display: block;
+        text-align: center;
+      }
+      .mgt-card h4 {
+        text-align: center;
+        margin-top: 0;
+        color: #2c3e50;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .mgt-card ul {
+        padding-left: 20px;
+        font-size: 1rem;
+        color: #444;
+        flex-grow: 1;
+      }
+      body.rtl .mgt-card ul {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+      .mgt-card li {
+        margin-bottom: 10px;
+      }
+
+      /* Video Wrapper */
+      .video-wrapper {
+        width: 100%;
+        height: 220px;
+        margin-top: 25px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #000;
+        position: relative;
+      }
+      .video-wrapper video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* --- Team Section --- */
       .team-section {
-        background: #2c3e50; /* لون غامق مميز */
+        background: #1a252f;
         color: white;
         text-align: center;
-        padding: 40px 20px;
-        margin-top: 50px;
-        border-top: 5px solid #f1c40f; /* خط ذهبي فاصل */
+        padding: 80px 20px;
+        margin-top: 80px;
+        border-top: 8px solid var(--gold);
       }
       .team-title {
-        color: #f1c40f; /* لون ذهبي للعنوان */
-        margin-bottom: 10px;
+        color: var(--gold);
+        margin-bottom: 40px;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
+        font-size: 2.5rem;
+        margin-top: 0;
+        font-weight: 700;
       }
       .supervisor-box {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px 50px;
+        border-radius: 12px;
         display: inline-block;
-        min-width: 250px;
+        margin-bottom: 40px;
+        border: 1px solid var(--gold);
       }
       .students-list {
         list-style: none;
         padding: 0;
-        font-size: 1.1rem;
+        font-size: 1.4rem;
+        color: #e0e0e0;
       }
       .students-list li {
-        margin: 5px 0;
+        margin: 15px 0;
+      }
+
+      /* --- References --- */
+      .ref-section {
+        background: #fff;
+        padding: 50px 20px;
+        border-top: 1px solid #eee;
+        margin-top: 0;
+      }
+      .ref-list p {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        color: #666;
+        word-break: break-word;
+        text-align: left;
+        direction: ltr;
       }
 
       footer {
-        background: #1a252f;
-        color: #bdc3c7;
+        background: #111;
+        color: #777;
         text-align: center;
-        padding: 20px;
-        font-size: 0.8rem;
+        padding: 30px;
+        font-size: 0.9rem;
+        margin-top: 0;
+      }
+
+      /* Hide/Show logic */
+      .content-ar {
+        display: none;
+      }
+      .content-en {
+        display: block;
       }
     </style>
   </head>
-  <body>
+  <body id="body">
+    <button class="lang-btn" onclick="toggleLanguage()">عربي / English</button>
+
     <header>
       <img
         src="college-logo.png"
         alt="College Logo"
         class="header-logo logo-left"
       />
-
-      <div class="header-title">
-        <h1>PICS Guide</h1>
-        <p>Al al-Bayt University (AABU)<br />Master of Critical Care Nursing</p>
+      <div class="header-center">
+        <div class="content-en">
+          <h1 class="main-title">POST-INTENSIVE CARE SYNDROME</h1>
+          <h2 class="sub-title">
+            Improving Long-Term Recovery and Quality of Life
+          </h2>
+        </div>
+        <div class="content-ar">
+          <h1 class="main-title">متلازمة ما بعد العناية الحثيثة</h1>
+          <h2 class="sub-title">
+            تحسين التعافي ونوعية الحياة على المدى الطويل
+          </h2>
+        </div>
       </div>
-
       <img
         src="university-logo.png"
         alt="University Logo"
@@ -279,149 +574,1148 @@
     </header>
 
     <nav>
-      <a href="#about">About</a>
-      <a href="#symptoms">Triad</a>
-      <a href="#management">MGT</a>
-      <a href="#team">Team</a>
+      <div class="content-en">
+        <a href="#definition">Definition</a>
+        <a href="#etiology">Etiology</a>
+        <a href="#manifestations">Manifestations</a>
+        <a href="#management">Management</a>
+      </div>
+      <div class="content-ar">
+        <a href="#definition">التعريف</a>
+        <a href="#etiology">المسببات</a>
+        <a href="#manifestations">الأعراض</a>
+        <a href="#management">العلاج والوقاية</a>
+      </div>
     </nav>
 
     <div class="container">
-      <div id="about" class="section-card">
-        <h2 style="color: var(--primary-blue)">What is PICS?</h2>
-        <p>
-          <strong>Definition:</strong> PICS refers to new or worsening
-          impairments in physical, cognitive, or mental health status arising
-          after critical illness.
-        </p>
+      <div class="content-en">
+        <div id="definition" class="section-card">
+          <h2>Definition & Overview</h2>
+          <p>
+            The term <strong>Post-Intensive Care Syndrome (PICS)</strong> was
+            formally coined in 2010 by the Society of Critical Care Medicine
+            (SCCM) at an international conference, aiming to provide a unified
+            framework for understanding the diverse long-term sequelae of
+            critical illness.
+          </p>
+          <p>
+            PICS is defined as
+            <em
+              >"new or worsening impairments in one or more domains of physical,
+              cognitive, mental, and/or social health among ICU survivors,
+              occurring during ICU treatment or after transfer from the ICU, and
+              potentially persisting to negatively affect patients’ prognosis
+              and quality of life"</em
+            >.
+          </p>
+          <p>
+            Importantly, PICS is not considered a single diagnosis; rather, it
+            represents a <strong>syndromic concept</strong> that encompasses
+            multiple interrelated and overlapping impairments. It affects
+            patients, their families (PICS-F), and has a broad multidimensional
+            impact beyond the ICU setting.
+          </p>
+          <div
+            style="
+              background-color: #e3f2fd;
+              border-left: 6px solid #2196f3;
+              padding: 25px;
+              margin-top: 30px;
+              border-radius: 6px;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 20px">
+              <i
+                class="fas fa-chart-pie"
+                style="font-size: 3rem; color: #0d47a1"
+              ></i>
+              <div>
+                <strong style="font-size: 1.3rem; color: #0d47a1"
+                  >Global Prevalence</strong
+                ><br />
+                Studies suggest that up to <strong>50–70%</strong> of ICU
+                survivors experience at least one component of PICS. These
+                impairments can persist for months or years, significantly
+                limiting a patient’s ability to return to pre-illness levels of
+                functioning.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="etiology" class="section-card">
+          <h2>Etiology and Risk Factors</h2>
+          <p>
+            The etiology of PICS is not attributed to a single pathological
+            process; rather, it reflects the cumulative effects of biological,
+            psychological, and environmental stressors occurring before, during,
+            and after an ICU stay.
+          </p>
+          <div class="risk-grid">
+            <div class="risk-col" style="border-top: 5px solid #e74c3c">
+              <div class="risk-header" style="border-bottom-color: #e74c3c">
+                <i
+                  class="fas fa-user-lock"
+                  style="font-size: 2rem; color: #e74c3c"
+                ></i>
+                <h3 style="color: #c0392b">Non-Modifiable Factors</h3>
+              </div>
+              <div class="risk-content">
+                <p>Baseline characteristics that increase susceptibility:</p>
+                <ul>
+                  <li>
+                    <strong>Advanced Age:</strong> Consistently associated with
+                    reduced physiological reserve and poorer recovery following
+                    critical illness.
+                  </li>
+                  <li>
+                    <strong>Comorbidities:</strong> History of diabetes
+                    mellitus, hypertension, chronic respiratory disease, renal
+                    disease, and cardiovascular disease.
+                  </li>
+                  <li>
+                    <strong>Pre-existing Conditions:</strong> Patients with
+                    pre-existing cognitive impairment, mental health disorders,
+                    or history of substance use.
+                  </li>
+                  <li>
+                    <strong>Illness Severity:</strong> Conditions such as
+                    <strong>Sepsis, Septic Shock, ARDS,</strong> and multiple
+                    organ dysfunction syndrome which trigger systemic
+                    inflammation and hypoxia.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="risk-col" style="border-top: 5px solid #27ae60">
+              <div class="risk-header" style="border-bottom-color: #27ae60">
+                <i
+                  class="fas fa-hospital-alt"
+                  style="font-size: 2rem; color: #27ae60"
+                ></i>
+                <h3 style="color: #27ae60">Modifiable (ICU) Factors</h3>
+              </div>
+              <div class="risk-content">
+                <p>Key targets for clinical intervention and prevention:</p>
+                <ul>
+                  <li>
+                    <strong>Mechanical Ventilation:</strong> Prolonged use is
+                    strongly associated with muscle atrophy and ICU-acquired
+                    weakness.
+                  </li>
+                  <li>
+                    <strong>Delirium:</strong> Frequency and duration of
+                    delirium are linked to long-term cognitive decline and PTSD.
+                  </li>
+                  <li>
+                    <strong>Medications:</strong> Exposure to
+                    <strong>benzodiazepines</strong>, high-dose opioids,
+                    corticosteroids, and neuromuscular blocking agents.
+                  </li>
+                  <li>
+                    <strong>ICU Environment:</strong> Noise, sleep disruption,
+                    constant lighting, social isolation, and immobilization.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
+          id="manifestations"
+          style="text-align: center; margin-bottom: 30px; padding-top: 20px"
+        >
+          <h2 style="border: none; color: #333">Clinical Manifestations</h2>
+          <p style="font-size: 1.2rem; max-width: 900px; margin: 0 auto">
+            PICS involves new or worsening impairments in physical, cognitive,
+            and psychological domains, often leading to social failure.
+          </p>
+        </div>
+        <div class="triad-nav-container">
+          <a href="#physical-detail" class="triad-btn bg-phy"
+            ><i class="fas fa-running btn-icon"></i> Physical</a
+          >
+          <a href="#cognitive-detail" class="triad-btn bg-cog"
+            ><i class="fas fa-brain btn-icon"></i> Cognitive</a
+          >
+          <a href="#psychological-detail" class="triad-btn bg-psy"
+            ><i class="fas fa-head-side-virus btn-icon"></i> Psych</a
+          >
+        </div>
+
+        <div
+          id="physical-detail"
+          class="detail-row"
           style="
-            background: #e3f2fd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid var(--primary-blue);
+            background-color: var(--bg-soft);
+            border-left: 6px solid var(--color-phy);
           "
         >
-          <strong>Impact:</strong> 50–70% of ICU survivors are affected.
+          <img
+            src="physical-img.png"
+            alt="Physical"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-phy)">Physical Impairments</h3>
+            <p>
+              Physical impairment is the most common manifestation, including
+              ICU-acquired weakness (ICU-AW) and swallowing disorders.
+            </p>
+            <ul>
+              <li>
+                <strong>ICU-acquired Weakness (ICU-AW):</strong> Includes
+                critical illness polyneuropathy and myopathy, leading to
+                symmetrical muscle weakness and atrophy.
+              </li>
+              <li>
+                <strong>Dysphagia (ICU-ASD):</strong> Most commonly
+                post-extubation dysphagia, increasing the risk of malnutrition,
+                re-intubation, and mortality.
+              </li>
+              <li>
+                <strong>Reduced Mobility:</strong> Decreased exercise tolerance,
+                impaired balance, and profound fatigue.
+              </li>
+              <li>
+                <strong>ADLs:</strong> Persistent difficulty performing
+                Activities of Daily Living, leading to dependence on caregivers.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="cognitive-detail"
+          class="detail-row"
+          style="
+            background-color: #fffaf4;
+            border-left: 6px solid var(--color-cog);
+          "
+        >
+          <img
+            src="cognitive-img.png"
+            alt="Cognitive"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-cog)">Cognitive Impairments</h3>
+            <p>
+              Cognitive dysfunction following ICU admission has been compared to
+              mild traumatic brain injury or early dementia in severity.
+            </p>
+            <ul>
+              <li>
+                <strong>Memory Deficits:</strong> Issues with memory retention
+                and recall, particularly short-term memory.
+              </li>
+              <li>
+                <strong>Executive Function:</strong> Impaired planning,
+                organizing, and problem-solving skills.
+              </li>
+              <li>
+                <strong>Attention & Processing:</strong> Reduced attention span,
+                poor concentration, and slower mental processing speed.
+              </li>
+              <li>
+                <strong>Impact:</strong> Interferes with medication adherence,
+                decision-making, and financial management.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="psychological-detail"
+          class="detail-row"
+          style="
+            background-color: #f0fff4;
+            border-left: 6px solid var(--color-psy);
+          "
+        >
+          <img
+            src="psychological-img.png"
+            alt="Psychological"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-psy)">Psychological Impairments</h3>
+            <p>
+              Arise from the traumatic nature of critical illness, frightening
+              ICU experiences, and loss of control.
+            </p>
+            <ul>
+              <li>
+                <strong>Anxiety & Depression:</strong> Common symptoms that
+                reduce motivation for recovery.
+              </li>
+              <li>
+                <strong>PTSD:</strong> Intrusive memories, nightmares,
+                flashbacks, and emotional numbness.
+              </li>
+              <li>
+                <strong>Sleep Disturbances:</strong> Insomnia and fragmented
+                sleep patterns.
+              </li>
+              <li>
+                <strong>Quality of Life:</strong> These symptoms often coexist
+                with physical deficits, compounding the burden.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="social-card">
+          <h3
+            style="
+              color: #8e44ad;
+              margin-top: 0;
+              border-bottom: 2px solid #f3e5f5;
+              padding-bottom: 15px;
+            "
+          >
+            <i class="fas fa-users"></i> Social Health: Failed Reconstruction
+          </h3>
+          <p>
+            <strong>Failed social reconstruction</strong> is a major consequence
+            resulting from the combination of physical, cognitive, and
+            psychological impairments.
+          </p>
+          <div
+            style="display: flex; gap: 30px; flex-wrap: wrap; margin-top: 25px"
+          >
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem"
+                >Unemployment</strong
+              ><br />
+              Cognitive and physical deficits often delay or prevent return to
+              work, causing financial hardship.
+            </div>
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem"
+                >Role Reversal</strong
+              ><br />
+              Shift in family dynamics where the patient becomes dependent on
+              caregivers for basic needs.
+            </div>
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem"
+                >Social Isolation</strong
+              ><br />
+              Withdrawal from social interactions due to depression, physical
+              limitations, or embarrassment.
+            </div>
+          </div>
+        </div>
+
+        <div id="management" class="section-card">
+          <h2>Management & Prevention Strategy</h2>
+          <div class="mgt-intro">
+            <p>
+              There is no single treatment for PICS; management requires a
+              <strong>multidisciplinary and individualized approach</strong>.
+              The primary objective is to reduce modifiable risk factors via the
+              <strong>ABCDEF bundle</strong> and prevent impairment progression.
+            </p>
+            <p>
+              <strong>Core Strategies:</strong> Include minimization of
+              sedation, delirium management, early mobilization, and structured
+              post-discharge follow-up. Nurses play a central role in
+              coordinating this care and educating families.
+            </p>
+          </div>
+          <div class="mgt-grid">
+            <div class="mgt-card">
+              <i class="fas fa-walking mgt-icon"></i>
+              <h4>1. Early Mobilization & Rehab</h4>
+              <p>
+                Early mobilization is a cornerstone intervention aimed at
+                preventing ICU-acquired weakness (ICU-AW).
+              </p>
+              <ul>
+                <li>
+                  <strong>Protocol:</strong> Interventions range from passive
+                  range-of-motion exercises for sedated patients to active
+                  ambulation.
+                </li>
+                <li>
+                  <strong>Benefits:</strong> Reduces muscle deconditioning,
+                  shortens delirium duration, and improves functional outcomes.
+                </li>
+                <li>
+                  <strong>Occupational Therapy:</strong> Essential for
+                  supporting functional recovery of daily activities (ADLs).
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="mobility.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <div class="mgt-card">
+              <i class="fas fa-brain mgt-icon"></i>
+              <h4>2. Education & Prevention</h4>
+              <p>
+                Non-pharmacological interventions and patient education are
+                cornerstones of management.
+              </p>
+              <ul>
+                <li>
+                  <strong>ICU Diaries:</strong> Cost-effective tools maintained
+                  by staff/family to help patients reconstruct memory gaps,
+                  reducing PTSD and anxiety.
+                </li>
+                <li>
+                  <strong>Sedation Optimization:</strong> Avoiding
+                  benzodiazepines and using spontaneous awakening trials
+                  improves neurological outcomes.
+                </li>
+                <li>
+                  <strong>Family Education:</strong> Teaching families about
+                  recovery timelines and warning signs reduces anxiety.
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="education.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <div class="mgt-card">
+              <i class="fas fa-user-md mgt-icon"></i>
+              <h4>3. Post-ICU Follow-up</h4>
+              <p>
+                Inadequate rehabilitation and insufficient follow-up may
+                exacerbate PICS symptoms.
+              </p>
+              <ul>
+                <li>
+                  <strong>Post-ICU Clinics:</strong> Structured clinics to
+                  monitor physical, cognitive, and psychological recovery.
+                </li>
+                <li>
+                  <strong>Care Coordination:</strong> Ensuring continuity of
+                  care, medication reconciliation, and nutritional support.
+                </li>
+                <li>
+                  <strong>Psychological Support:</strong> Counseling and peer
+                  support groups for patients and families.
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="followup.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="section-card"
+            style="
+              margin-top: 40px;
+              border: 2px dashed #16a085;
+              background: #e8f6f3;
+            "
+          >
+            <h3 style="color: #16a085; margin-top: 0; text-align: center">
+              <i class="fas fa-hands-helping"></i> Family Support (PICS-Family)
+            </h3>
+            <p style="text-align: center">
+              PICS does not only affect the patient. Family members often
+              develop psychological distress, known as
+              <strong>PICS-Family (PICS-F)</strong>.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                flex-wrap: wrap;
+                margin-top: 20px;
+              "
+            >
+              <div
+                style="
+                  flex: 1;
+                  min-width: 250px;
+                  background: white;
+                  padding: 20px;
+                  border-radius: 8px;
+                "
+              >
+                <strong
+                  ><i class="fas fa-check-circle" style="color: #16a085"></i>
+                  Participation</strong
+                >
+                <p style="margin: 5px 0 0; font-size: 0.95rem">
+                  Engage in ICU care and decision-making to reduce feelings of
+                  helplessness.
+                </p>
+              </div>
+              <div
+                style="
+                  flex: 1;
+                  min-width: 250px;
+                  background: white;
+                  padding: 20px;
+                  border-radius: 8px;
+                "
+              >
+                <strong
+                  ><i class="fas fa-check-circle" style="color: #16a085"></i>
+                  Education</strong
+                >
+                <p style="margin: 5px 0 0; font-size: 0.95rem">
+                  Understand symptoms and recovery expectations to better
+                  support the patient.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-section">
+          <h2 class="team-title">PROJECT TEAM</h2>
+          <div class="supervisor-box">
+            <small
+              style="
+                text-transform: uppercase;
+                color: #ddd;
+                letter-spacing: 2px;
+              "
+              >Under the Supervision of</small
+            ><br />
+            <span style="font-size: 1.8rem; font-weight: bold; color: white"
+              >Prof. Loai Tawalbeh</span
+            >
+          </div>
+          <div>
+            <small
+              style="
+                text-transform: uppercase;
+                color: #f1c40f;
+                letter-spacing: 2px;
+                font-weight: bold;
+              "
+              >Prepared by Master Students</small
+            >
+            <ul class="students-list">
+              <li>Mohammad Ali Alquran</li>
+              <li>Saif AlDeen Sameer Ghanem</li>
+              <li>Huthaifa alsalim Almashaqba</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div id="symptoms" style="text-align: center">
-        <h3>Core Components:</h3>
-      </div>
+      <div class="content-ar">
+        <div id="definition" class="section-card">
+          <h2>التعريف والنظرة العامة</h2>
+          <p>
+            تمت صياغة مصطلح
+            <strong>متلازمة ما بعد العناية الحثيثة (PICS)</strong> رسمياً في عام
+            2010 من قبل جمعية طب الرعاية الحرجة (SCCM) خلال مؤتمر دولي، وذلك
+            بهدف توفير إطار موحد لفهم التبعات والمضاعفات طويلة الأمد للأمراض
+            الحرجة.
+          </p>
+          <p>
+            تُعرف المتلازمة بأنها:
+            <em
+              >"إعاقات جديدة أو متفاقمة في واحد أو أكثر من المجالات الجسدية،
+              الإدراكية، النفسية، و/أو الاجتماعية بين الناجين من العناية
+              المركزة، والتي تحدث أثناء العلاج في العناية أو بعد الخروج منها،
+              وقد تستمر لتؤثر سلباً على التشخيص المستقبلي للمريض وجودة
+              حياته"</em
+            >.
+          </p>
+          <p>
+            من المهم الإشارة إلى أن PICS لا تُعتبر تشخيصاً منفرداً؛ بل هي
+            <strong>مفهوم متلازمي</strong> يشمل عدة إعاقات مترابطة ومتداخلة. وهي
+            تؤثر على المرضى، وعائلاتهم (ما يعرف بـ PICS-F)، ولها تأثير واسع
+            النطاق يمتد إلى ما بعد مرحلة العناية المركزة.
+          </p>
 
-      <div class="triad-nav-container">
-        <a href="#physical-detail" class="triad-btn bg-phy">
-          <i class="fas fa-running btn-icon"></i> Physical
-        </a>
-        <a href="#cognitive-detail" class="triad-btn bg-cog">
-          <i class="fas fa-brain btn-icon"></i> Cognitive
-        </a>
-        <a href="#psychological-detail" class="triad-btn bg-psy">
-          <i class="fas fa-head-side-virus btn-icon"></i> Psych
-        </a>
-      </div>
-
-      <div
-        id="physical-detail"
-        class="section-card detail-row"
-        style="border-left: 5px solid #3498db"
-      >
-        <img
-          src="physical-illustration.jpg"
-          alt="Physical"
-          class="large-section-img"
-        />
-        <div>
-          <h3 style="color: #3498db">Physical Impairments</h3>
-          <ul>
-            <li>ICU-acquired weakness.</li>
-            <li>Reduced endurance.</li>
-            <li>Difficulty with daily activities.</li>
-          </ul>
+          <div
+            style="
+              background-color: #e3f2fd;
+              border-right: 6px solid #2196f3;
+              border-left: none;
+              padding: 25px;
+              margin-top: 30px;
+              border-radius: 6px;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 20px">
+              <i
+                class="fas fa-chart-pie"
+                style="font-size: 3rem; color: #0d47a1"
+              ></i>
+              <div>
+                <strong style="font-size: 1.3rem; color: #0d47a1"
+                  >الانتشار العالمي</strong
+                ><br />
+                تشير الدراسات إلى أن ما بين <strong>50–70%</strong> من الناجين
+                من العناية المركزة يعانون من عنصر واحد على الأقل من عناصر هذه
+                المتلازمة، مما يحد بشكل كبير من قدرتهم على العودة لمستوياتهم
+                الوظيفية السابقة.
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div
-        id="cognitive-detail"
-        class="section-card detail-row"
-        style="border-left: 5px solid #e67e22"
-      >
-        <img
-          src="cognitive-illustration.jpg"
-          alt="Cognitive"
-          class="large-section-img"
-        />
-        <div>
-          <h3 style="color: #e67e22">Cognitive Impairments</h3>
-          <ul>
-            <li>Memory deficits.</li>
-            <li>Poor concentration.</li>
-            <li>Slower processing speed.</li>
-          </ul>
+        <div id="etiology" class="section-card">
+          <h2>المسببات وعوامل الخطر</h2>
+          <p>
+            لا يُعزى سبب PICS إلى عملية مرضية واحدة؛ بل يعكس التأثيرات التراكمية
+            للضغوط البيولوجية والنفسية والبيئية التي تحدث قبل وأثناء وبعد
+            الإقامة في وحدة العناية المركزة.
+          </p>
+          <div class="risk-grid">
+            <div class="risk-col" style="border-top: 5px solid #e74c3c">
+              <div class="risk-header" style="border-bottom-color: #e74c3c">
+                <i
+                  class="fas fa-user-lock"
+                  style="font-size: 2rem; color: #e74c3c"
+                ></i>
+                <h3 style="color: #c0392b">عوامل غير قابلة للتعديل</h3>
+              </div>
+              <div class="risk-content">
+                <p>خصائص أساسية تزيد من القابلية للإصابة:</p>
+                <ul>
+                  <li>
+                    <strong>التقدم في السن:</strong> يرتبط بشكل ثابت بانخفاض
+                    الاحتياطي الفسيولوجي وضعف التعافي.
+                  </li>
+                  <li>
+                    <strong>الأمراض المصاحبة:</strong> تاريخ مرضي من السكري،
+                    ارتفاع ضغط الدم، أمراض الجهاز التنفسي المزمنة، أمراض الكلى،
+                    وأمراض القلب.
+                  </li>
+                  <li>
+                    <strong>الحالات الموجودة مسبقاً:</strong> المرضى الذين
+                    يعانون من ضعف إدراكي أو اضطرابات نفسية سابقة.
+                  </li>
+                  <li>
+                    <strong>شدة المرض:</strong> الحالات مثل
+                    <strong
+                      >الإنتان (Sepsis)، الصدمة الإنتانية، ضيق التنفس الحاد
+                      (ARDS)،</strong
+                    >
+                    وفشل الأعضاء المتعدد الذي يسبب التهاباً جهازياً ونقصاً في
+                    الأكسجين.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="risk-col" style="border-top: 5px solid #27ae60">
+              <div class="risk-header" style="border-bottom-color: #27ae60">
+                <i
+                  class="fas fa-hospital-alt"
+                  style="font-size: 2rem; color: #27ae60"
+                ></i>
+                <h3 style="color: #27ae60">عوامل قابلة للتعديل (بالمستشفى)</h3>
+              </div>
+              <div class="risk-content">
+                <p>أهداف رئيسية للتدخل السريري والوقاية:</p>
+                <ul>
+                  <li>
+                    <strong>التهوية الميكانيكية (التنفس الاصطناعي):</strong>
+                    يرتبط الاستخدام الطويل بقوة بضمور العضلات والضعف المكتسب.
+                  </li>
+                  <li>
+                    <strong>الهذيان (Delirium):</strong> يرتبط تكرار ومدة
+                    الهذيان بالتدهور الإدراكي طويل الأمد.
+                  </li>
+                  <li>
+                    <strong>الأدوية:</strong> التعرض للمهدئات (خاصة
+                    <strong>البنزوديازيبينات</strong>)، الجرعات العالية من
+                    المواد الأفيونية، والكورتيكوستيرويدات.
+                  </li>
+                  <li>
+                    <strong>بيئة العناية:</strong> الضوضاء، اضطراب النوم،
+                    الإضاءة المستمرة، العزلة الاجتماعية، وقلة الحركة.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div
-        id="psychological-detail"
-        class="section-card detail-row"
-        style="border-left: 5px solid #2ecc71"
-      >
-        <img
-          src="psychological-illustration.jpg"
-          alt="Psychological"
-          class="large-section-img"
-        />
-        <div>
-          <h3 style="color: #2ecc71">Psychological Impairments</h3>
-          <ul>
-            <li>Anxiety & Depression.</li>
-            <li>PTSD symptoms.</li>
-          </ul>
+        <div
+          id="manifestations"
+          style="text-align: center; margin-bottom: 30px; padding-top: 20px"
+        >
+          <h2 style="border: none; color: #333">المظاهر السريرية (الأعراض)</h2>
+          <p style="font-size: 1.2rem; max-width: 900px; margin: 0 auto">
+            تتضمن المتلازمة إعاقات جديدة أو متفاقمة في المجالات الجسدية
+            والإدراكية والنفسية، مما يؤدي غالباً إلى فشل اجتماعي ووظيفي.
+          </p>
         </div>
-      </div>
+        <div class="triad-nav-container">
+          <a href="#physical-detail" class="triad-btn bg-phy"
+            ><i class="fas fa-running btn-icon"></i> الجسدية</a
+          >
+          <a href="#cognitive-detail" class="triad-btn bg-cog"
+            ><i class="fas fa-brain btn-icon"></i> الإدراكية</a
+          >
+          <a href="#psychological-detail" class="triad-btn bg-psy"
+            ><i class="fas fa-head-side-virus btn-icon"></i> النفسية</a
+          >
+        </div>
 
-      <div id="management" class="section-card">
-        <h2 style="color: var(--primary-blue)">Management</h2>
-        <p>
-          Multidisciplinary approach: Early mobilization, Education, and
-          Follow-up.
-        </p>
+        <div
+          id="physical-detail"
+          class="detail-row"
+          style="
+            background-color: var(--bg-soft);
+            border-right: 6px solid var(--color-phy);
+            border-left: none;
+          "
+        >
+          <img
+            src="physical-img.png"
+            alt="Physical"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-phy)">الإعاقات الجسدية</h3>
+            <p>
+              هي أكثر المظاهر شيوعاً وتنتج عن هزال العضلات والالتهابات وتضرر
+              الأعصاب:
+            </p>
+            <ul>
+              <li>
+                <strong>الضعف المكتسب في العناية (ICU-AW):</strong> يشمل اعتلال
+                الأعصاب والعضلات المرتبط بالمرض الحرج، مما يؤدي لضعف وضمور
+                العضلات المتماثل.
+              </li>
+              <li>
+                <strong>عسر البلع (Dysphagia):</strong> اضطرابات البلع بعد إزالة
+                أنبوب التنفس، مما يزيد خطر سوء التغذية والالتهاب الرئوي.
+              </li>
+              <li>
+                <strong>انخفاض الحركة:</strong> انخفاض القدرة على التحمل، اختلال
+                التوازن، والتعب الشديد.
+              </li>
+              <li>
+                <strong>أنشطة الحياة اليومية (ADLs):</strong> صعوبة مستمرة في
+                أداء المهام اليومية، مما يؤدي للاعتماد على مقدمي الرعاية.
+              </li>
+            </ul>
+          </div>
+        </div>
 
-        <h4>Watch: Management Overview</h4>
-        <div class="video-wrapper">
-          <video controls>
-            <source src="management-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        <div
+          id="cognitive-detail"
+          class="detail-row"
+          style="
+            background-color: #fffaf4;
+            border-right: 6px solid var(--color-cog);
+            border-left: none;
+          "
+        >
+          <img
+            src="cognitive-img.png"
+            alt="Cognitive"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-cog)">الإعاقات الإدراكية</h3>
+            <p>
+              تم تشبيه الخلل الإدراكي بعد العناية المركزة بإصابات الدماغ الرضحية
+              الخفيفة أو الخرف المبكر من حيث الشدة:
+            </p>
+            <ul>
+              <li>
+                <strong>قصور الذاكرة:</strong> مشاكل في الاحتفاظ بالمعلومات
+                واسترجاعها، خاصة الذاكرة قصيرة المدى.
+              </li>
+              <li>
+                <strong>الوظائف التنفيذية:</strong> ضعف المهارات في التخطيط،
+                التنظيم، وحل المشكلات.
+              </li>
+              <li>
+                <strong>الانتباه والمعالجة:</strong> انخفاض فترة التركيز وبطء
+                سرعة المعالجة الذهنية.
+              </li>
+              <li>
+                <strong>التأثير:</strong> يتداخل ذلك مع القدرة على الالتزام
+                بالأدوية، اتخاذ القرارات، وإدارة الشؤون المالية.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          id="psychological-detail"
+          class="detail-row"
+          style="
+            background-color: #f0fff4;
+            border-right: 6px solid var(--color-psy);
+            border-left: none;
+          "
+        >
+          <img
+            src="psychological-img.png"
+            alt="Psychological"
+            class="large-section-img"
+          />
+          <div class="detail-content">
+            <h3 style="color: var(--color-psy)">الاضطرابات النفسية</h3>
+            <p>
+              تنشأ نتيجة الطبيعة الصادمة للمرض الحرج، وتجارب العناية المخيفة،
+              وفقدان السيطرة:
+            </p>
+            <ul>
+              <li>
+                <strong>القلق والاكتئاب:</strong> أعراض شائعة تقلل من الحافز
+                للتعافي وتؤثر على جودة الحياة.
+              </li>
+              <li>
+                <strong>اضطراب ما بعد الصدمة (PTSD):</strong> ذكريات اقتحامية،
+                كوابيس، استرجاع أحداث الماضي (Flashbacks)، وخدر عاطفي.
+              </li>
+              <li>
+                <strong>اضطرابات النوم:</strong> الأرق وأنماط النوم المتقطعة.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="social-card">
+          <h3
+            style="
+              color: #8e44ad;
+              margin-top: 0;
+              border-bottom: 2px solid #f3e5f5;
+              padding-bottom: 15px;
+            "
+          >
+            <i class="fas fa-users"></i> الصحة الاجتماعية: الفشل في إعادة
+            الاندماج
+          </h3>
+          <p>
+            <strong>الفشل في إعادة البناء الاجتماعي</strong> هو نتيجة رئيسية
+            لمزيج الإعاقات الجسدية والإدراكية والنفسية.
+          </p>
+          <div
+            style="display: flex; gap: 30px; flex-wrap: wrap; margin-top: 25px"
+          >
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem">البطالة</strong
+              ><br />
+              الإعاقات الإدراكية والجسدية تؤخر أو تمنع العودة للعمل، مما يسبب
+              ضائقة مالية.
+            </div>
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem"
+                >تبادل الأدوار</strong
+              ><br />
+              تغير في ديناميكيات الأسرة حيث يصبح المريض معتمداً على مقدمي
+              الرعاية لتلبية احتياجاته الأساسية.
+            </div>
+            <div style="flex: 1">
+              <strong style="color: #8e44ad; font-size: 1.2rem"
+                >العزلة الاجتماعية</strong
+              ><br />
+              الانسحاب من التفاعلات الاجتماعية بسبب الاكتئاب، القيود الجسدية، أو
+              الإحراج.
+            </div>
+          </div>
+        </div>
+
+        <div id="management" class="section-card">
+          <h2>استراتيجيات العلاج والوقاية</h2>
+          <div
+            class="mgt-intro"
+            style="
+              border-right: 6px solid var(--primary-blue);
+              border-left: none;
+            "
+          >
+            <p>
+              لا يوجد علاج واحد لمتلازمة PICS؛ تتطلب الإدارة نهجاً
+              <strong>متعدد التخصصات وفردياً</strong>. الهدف الأساسي هو تقليل
+              عوامل الخطر القابلة للتعديل ومنع تفاقم الإعاقات.
+            </p>
+            <p>
+              <strong>الاستراتيجيات الأساسية:</strong> تشمل تطبيق
+              <strong>حزمة ABCDEF bundle</strong>، تقليل التخدير، إدارة الهذيان،
+              الحركة المبكرة، والمتابعة الهيكلية بعد الخروج. يلعب التمريض دوراً
+              محورياً في تنسيق هذه الرعاية وتثقيف العائلات.
+            </p>
+          </div>
+          <div class="mgt-grid">
+            <div class="mgt-card">
+              <i class="fas fa-walking mgt-icon"></i>
+              <h4>1. الحركة المبكرة والتأهيل</h4>
+              <p>
+                التدخل الأساسي الذي يهدف إلى منع الضعف المكتسب في العناية
+                المركزة (ICU-AW).
+              </p>
+              <ul>
+                <li>
+                  <strong>البروتوكول:</strong> تتراوح التدخلات من تمارين النطاق
+                  الحركي السلبي (Passive ROM) للمرضى المخدرين إلى المشي النشط.
+                </li>
+                <li>
+                  <strong>الفوائد:</strong> يقلل من تدهور العضلات، يقصر مدة
+                  الهذيان، ويحسن النتائج الوظيفية.
+                </li>
+                <li>
+                  <strong>العلاج الوظيفي:</strong> ضروري لدعم التعافي الوظيفي
+                  لأنشطة الحياة اليومية (ADLs).
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="mobility.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <div class="mgt-card">
+              <i class="fas fa-brain mgt-icon"></i>
+              <h4>2. التعليم والوقاية</h4>
+              <p>
+                التدخلات غير الدوائية وتثقيف المرضى هي ركائز أساسية للإدارة.
+              </p>
+              <ul>
+                <li>
+                  <strong>مذكرات العناية (ICU Diaries):</strong> أدوات فعالة من
+                  حيث التكلفة يحتفظ بها الطاقم/العائلة لمساعدة المرضى على إعادة
+                  بناء فجوات الذاكرة، مما يقلل من اضطراب ما بعد الصدمة والقلق.
+                </li>
+                <li>
+                  <strong>تحسين التخدير:</strong> تجنب البنزوديازيبينات واستخدام
+                  محاولات الإفاقة التلقائية يحسن النتائج العصبية.
+                </li>
+                <li>
+                  <strong>تثقيف العائلة:</strong> تعليم العائلات حول جداول
+                  التعافي وعلامات التحذير يقلل من القلق.
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="education.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <div class="mgt-card">
+              <i class="fas fa-user-md mgt-icon"></i>
+              <h4>3. المتابعة بعد الخروج</h4>
+              <p>
+                قد يؤدي نقص إعادة التأهيل وعدم كفاية المتابعة إلى تفاقم أعراض
+                PICS.
+              </p>
+              <ul>
+                <li>
+                  <strong>عيادات ما بعد العناية:</strong> عيادات منظمة لمراقبة
+                  التعافي الجسدي والإدراكي والنفسي.
+                </li>
+                <li>
+                  <strong>تنسيق الرعاية:</strong> ضمان استمرارية الرعاية، مراجعة
+                  الأدوية، والدعم الغذائي.
+                </li>
+                <li>
+                  <strong>الدعم النفسي:</strong> الإرشاد ومجموعات دعم الأقران
+                  للمرضى وعائلاتهم.
+                </li>
+              </ul>
+              <div class="video-wrapper">
+                <video controls>
+                  <source src="followup.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="section-card"
+            style="
+              margin-top: 40px;
+              border: 2px dashed #16a085;
+              background: #e8f6f3;
+            "
+          >
+            <h3 style="color: #16a085; margin-top: 0; text-align: center">
+              <i class="fas fa-hands-helping"></i> الدعم العائلي (PICS-Family)
+            </h3>
+            <p style="text-align: center">
+              لا تؤثر المتلازمة على المريض فقط. غالباً ما يعاني أفراد الأسرة من
+              ضائقة نفسية تُعرف بـ <strong>PICS-Family (PICS-F)</strong>.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                flex-wrap: wrap;
+                margin-top: 20px;
+              "
+            >
+              <div
+                style="
+                  flex: 1;
+                  min-width: 250px;
+                  background: white;
+                  padding: 20px;
+                  border-radius: 8px;
+                "
+              >
+                <strong
+                  ><i class="fas fa-check-circle" style="color: #16a085"></i>
+                  المشاركة</strong
+                >
+                <p style="margin: 5px 0 0; font-size: 0.95rem">
+                  إشراك الأسرة في الرعاية واتخاذ القرار لتقليل شعورهم بالعجز.
+                </p>
+              </div>
+              <div
+                style="
+                  flex: 1;
+                  min-width: 250px;
+                  background: white;
+                  padding: 20px;
+                  border-radius: 8px;
+                "
+              >
+                <strong
+                  ><i class="fas fa-check-circle" style="color: #16a085"></i>
+                  التعليم</strong
+                >
+                <p style="margin: 5px 0 0; font-size: 0.95rem">
+                  فهم الأعراض وتوقعات التعافي لدعم المريض بشكل أفضل.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-section">
+          <h2 class="team-title">فريق العمل</h2>
+          <div class="supervisor-box">
+            <small
+              style="
+                text-transform: uppercase;
+                color: #ddd;
+                letter-spacing: 2px;
+              "
+              >بإشراف</small
+            ><br />
+            <span style="font-size: 1.8rem; font-weight: bold; color: white"
+              >أ.د. لؤي طوالبة</span
+            >
+          </div>
+          <div>
+            <small
+              style="
+                text-transform: uppercase;
+                color: #f1c40f;
+                letter-spacing: 2px;
+                font-weight: bold;
+              "
+              >إعداد طلبة الماجستير</small
+            >
+            <ul class="students-list">
+              <li>محمد علي القرعان</li>
+              <li>سيف الدين سمير غانم</li>
+              <li>حذيفة السالم المشاقبة</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="team" class="team-section">
-      <h2 class="team-title">Project Team</h2>
-
-      <div class="supervisor-box">
-        <small>Under the Supervision of:</small><br />
-        <strong style="font-size: 1.2rem"
-          >Dr. [Write Doctor's Name Here]</strong
-        >
-      </div>
-
-      <br />
-
-      <div style="margin-top: 10px">
-        <small>Prepared by Master Students:</small>
-        <ul class="students-list">
-          <li>Student Name 1</li>
-          <li>Student Name 2</li>
-          <li>Student Name 3</li>
-        </ul>
+    <div class="ref-section">
+      <div
+        class="container"
+        style="margin-top: 0; margin-bottom: 0; max-width: 900px"
+      >
+        <h3 style="color: #555">References</h3>
+        <div class="ref-list">
+          <p>
+            Chu, Y., Timmins, F., & Thompson, D. R. (2021). Post-intensive care
+            syndrome: A concept analysis.
+            <em>International Journal of Nursing Studies</em>, 114, 103814.
+            https://doi.org/10.1016/j.ijnurstu.2020.103814
+          </p>
+          <p>
+            He, X., et al. (2024). Post intensive care syndrome: A review of
+            clinical symptoms, evaluation, and intervention. <em>Heliyon</em>,
+            10, e31278. https://doi.org/10.1016/j.heliyon.2024.e31278
+          </p>
+          <p>
+            Hiser, S. L., Fatima, A., Ali, M., & Needham, D. M. (2023).
+            Post-intensive care syndrome (PICS): Recent updates.
+            <em>Journal of Intensive Care</em>, 11(23).
+            https://doi.org/10.1186/s40560-023-00670-7
+          </p>
+          <p>
+            Inoue, S., et al. (2024). Post-intensive care syndrome: Recent
+            advances and future directions. <em>Acute Medicine & Surgery</em>,
+            11, e929. https://doi.org/10.1002/ams2.929
+          </p>
+          <p>
+            Putowski, Z., Rachfalska, N., Majewska, K., Megger, K., & Krzych, Ł.
+            (2023). Identification of risk factors for post-intensive care
+            syndrome in family members (PICS-F) among adult patients: a
+            systematic review. <em>Anaesthesiology Intensive Therapy</em>,
+            55(5), 51319.
+          </p>
+          <p>
+            Renner, C., et al. (2023). Guideline on multimodal rehabilitation
+            for patients with post-intensive care syndrome.
+            <em>Critical Care</em>, 27, 301.
+            https://doi.org/10.1186/s13054-023-04569-5
+          </p>
+        </div>
       </div>
     </div>
 
     <footer>
-      <p>References: Needham et al. (2012); Inoue et al. (2019)</p>
-      <p>&copy; 2025 Al al-Bayt University</p>
+      <p class="content-en">
+        &copy; 2025 Al al-Bayt University - Princess Salma Faculty of Nursing
+      </p>
+      <p class="content-ar">
+        &copy; 2025 جامعة آل البيت - كلية الأميرة سلمى للتمريض
+      </p>
     </footer>
+
+    <script>
+      function toggleLanguage() {
+        const body = document.getElementById("body");
+        const isEnglish = body.getAttribute("dir") === "ltr";
+
+        if (isEnglish) {
+          // Switch to Arabic
+          body.setAttribute("dir", "rtl");
+          body.classList.add("rtl");
+          document
+            .querySelectorAll(".content-en")
+            .forEach((el) => (el.style.display = "none"));
+          document
+            .querySelectorAll(".content-ar")
+            .forEach((el) => (el.style.display = "block"));
+        } else {
+          // Switch to English
+          body.setAttribute("dir", "ltr");
+          body.classList.remove("rtl");
+          document
+            .querySelectorAll(".content-en")
+            .forEach((el) => (el.style.display = "block"));
+          document
+            .querySelectorAll(".content-ar")
+            .forEach((el) => (el.style.display = "none"));
+        }
+      }
+    </script>
   </body>
 </html>
