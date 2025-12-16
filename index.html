@@ -66,7 +66,7 @@
         background: var(--gold);
         color: #333;
         border: none;
-        padding: 10px 20px;
+        padding: 8px 20px;
         border-radius: 25px;
         font-weight: bold;
         cursor: pointer;
@@ -119,56 +119,58 @@
         font-weight: 500;
       }
 
-      /* --- Mobile Header Layout (Logos Top, Title Bottom) --- */
+      /* --- Mobile Header Layout (Compact & Optimized) --- */
       @media (max-width: 900px) {
         header {
-          grid-template-columns: 1fr 1fr; /* Split top into 2 for logos */
-          grid-template-rows: auto auto; /* Row 1: Logos, Row 2: Title */
-          padding: 1rem;
-          gap: 10px;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
+          padding: 0.8rem; /* Reduced padding */
+          gap: 5px; /* Reduced gap */
         }
 
-        /* Force logos to top row */
+        /* Smaller Logos for Mobile */
         .logo-left {
           grid-column: 1 / 2;
           grid-row: 1;
           justify-self: start;
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
         }
         .logo-right {
           grid-column: 2 / 3;
           grid-row: 1;
           justify-self: end;
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
         }
 
-        /* Force Title to bottom row, spanning full width */
         .header-center {
           grid-column: 1 / 3;
           grid-row: 2;
-          margin-top: 15px;
+          margin-top: 5px; /* Less margin */
         }
 
+        /* Smaller Fonts for Mobile */
         .main-title {
-          font-size: 1.8rem;
+          font-size: 1.5rem;
+          line-height: 1.2;
         }
         .sub-title {
-          font-size: 1.1rem;
+          font-size: 0.95rem;
+          margin-top: 5px;
         }
 
-        /* Adjust Lang Button for Mobile */
+        /* Move Lang Button slightly */
         .lang-btn {
           top: auto;
-          bottom: 20px;
-          right: 20px;
-          padding: 8px 16px;
-          font-size: 0.9rem;
-          opacity: 0.9;
+          bottom: 15px;
+          right: 15px;
+          padding: 6px 12px;
+          font-size: 0.8rem;
+          opacity: 0.95;
         }
         body.rtl .lang-btn {
-          left: 20px;
+          left: 15px;
           right: auto;
         }
       }
@@ -186,9 +188,9 @@
       nav a {
         color: white;
         text-decoration: none;
-        margin: 0 15px;
+        margin: 0 12px;
         font-weight: 600;
-        font-size: 1.05rem;
+        font-size: 1rem;
         text-transform: uppercase;
         transition: color 0.3s;
         display: inline-block;
@@ -198,10 +200,17 @@
         text-decoration: underline;
       }
 
+      @media (max-width: 600px) {
+        nav a {
+          font-size: 0.9rem;
+          margin: 0 8px;
+        }
+      }
+
       /* --- Container --- */
       .container {
         max-width: 1200px;
-        margin: 50px auto;
+        margin: 40px auto;
         padding: 0 20px;
       }
 
@@ -212,6 +221,13 @@
         border-radius: 12px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
         border: 1px solid #eee;
+      }
+
+      @media (max-width: 600px) {
+        .section-card {
+          padding: 25px;
+          margin-bottom: 30px;
+        }
       }
 
       h2 {
@@ -456,10 +472,10 @@
         margin-bottom: 10px;
       }
 
-      /* Video Wrapper */
+      /* --- Video Wrapper (FIXED ASPECT RATIO) --- */
       .video-wrapper {
         width: 100%;
-        height: 220px;
+        aspect-ratio: 16 / 9; /* Keeps video rectangle perfectly on all screens */
         margin-top: 25px;
         border-radius: 8px;
         overflow: hidden;
@@ -534,7 +550,6 @@
         margin-top: 0;
       }
 
-      /* Hide/Show logic */
       .content-ar {
         display: none;
       }
@@ -581,10 +596,10 @@
         <a href="#management">Management</a>
       </div>
       <div class="content-ar">
-        <a href="#definition">التعريف</a>
-        <a href="#etiology">المسببات</a>
-        <a href="#manifestations">الأعراض</a>
-        <a href="#management">العلاج والوقاية</a>
+        <a href="#definition-ar">التعريف</a>
+        <a href="#etiology-ar">المسببات</a>
+        <a href="#manifestations-ar">الأعراض</a>
+        <a href="#management-ar">العلاج والوقاية</a>
       </div>
     </nav>
 
@@ -1115,7 +1130,7 @@
       </div>
 
       <div class="content-ar">
-        <div id="definition" class="section-card">
+        <div id="definition-ar" class="section-card">
           <h2>التعريف والنظرة العامة</h2>
           <p>
             تمت صياغة مصطلح
@@ -1169,7 +1184,7 @@
           </div>
         </div>
 
-        <div id="etiology" class="section-card">
+        <div id="etiology-ar" class="section-card">
           <h2>المسببات وعوامل الخطر</h2>
           <p>
             لا يُعزى سبب PICS إلى عملية مرضية واحدة؛ بل يعكس التأثيرات التراكمية
@@ -1248,7 +1263,7 @@
         </div>
 
         <div
-          id="manifestations"
+          id="manifestations-ar"
           style="text-align: center; margin-bottom: 30px; padding-top: 20px"
         >
           <h2 style="border: none; color: #333">المظاهر السريرية (الأعراض)</h2>
@@ -1258,19 +1273,19 @@
           </p>
         </div>
         <div class="triad-nav-container">
-          <a href="#physical-detail" class="triad-btn bg-phy"
+          <a href="#physical-detail-ar" class="triad-btn bg-phy"
             ><i class="fas fa-running btn-icon"></i> الجسدية</a
           >
-          <a href="#cognitive-detail" class="triad-btn bg-cog"
+          <a href="#cognitive-detail-ar" class="triad-btn bg-cog"
             ><i class="fas fa-brain btn-icon"></i> الإدراكية</a
           >
-          <a href="#psychological-detail" class="triad-btn bg-psy"
+          <a href="#psychological-detail-ar" class="triad-btn bg-psy"
             ><i class="fas fa-head-side-virus btn-icon"></i> النفسية</a
           >
         </div>
 
         <div
-          id="physical-detail"
+          id="physical-detail-ar"
           class="detail-row"
           style="
             background-color: var(--bg-soft);
@@ -1312,7 +1327,7 @@
         </div>
 
         <div
-          id="cognitive-detail"
+          id="cognitive-detail-ar"
           class="detail-row"
           style="
             background-color: #fffaf4;
@@ -1353,7 +1368,7 @@
         </div>
 
         <div
-          id="psychological-detail"
+          id="psychological-detail-ar"
           class="detail-row"
           style="
             background-color: #f0fff4;
@@ -1430,7 +1445,7 @@
           </div>
         </div>
 
-        <div id="management" class="section-card">
+        <div id="management-ar" class="section-card">
           <h2>استراتيجيات العلاج والوقاية</h2>
           <div
             class="mgt-intro"
