@@ -82,78 +82,6 @@
             right: auto;
             left: 20px;
         }
-
-        /* --- Jordan Widget (GENTLER ALIVE ANIMATION) --- */
-        .jordan-widget {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 2000;
-            text-align: center;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: none; 
-            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.25));
-            perspective: 1000px; 
-        }
-        body.rtl .jordan-widget {
-            left: auto;
-            right: 30px;
-        }
-        
-        .flag-logo {
-            width: 100px; 
-            height: auto;
-            display: block;
-            pointer-events: auto;
-            /* 15s Total Cycle */
-            animation: pop-spin-gentle-alive 15s ease-in-out infinite;
-            transform-style: preserve-3d;
-            backface-visibility: visible;
-        }
-
-        .cheer-text {
-            font-family: 'Tajawal', sans-serif;
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: var(--jordan-green);
-            margin-top: 10px;
-            text-transform: uppercase;
-            text-shadow: 
-                2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
-                1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
-            pointer-events: auto;
-            /* Syncs with logo */
-            animation: pop-spin-gentle-alive 15s ease-in-out infinite;
-        }
-
-        /* حركة خفيفة جداً وناعمة وهو ثابت */
-        @keyframes pop-spin-gentle-alive {
-            /* 0% - 13%: Entry (2 seconds) - Spin UP */
-            0% { opacity: 0; transform: translateY(150px) rotateY(180deg) scale(0.1); }
-            13% { opacity: 1; transform: translateY(0) rotateY(0deg) scale(1); }
-
-            /* 13% - 80%: Stay Visible (10 seconds) - VERY GENTLE MOVEMENT */
-            /* حركة خفيفة جداً للأعلى وميلان بسيط */
-            30% { transform: translateY(-8px) rotateZ(-2deg) scale(1.02); }
-            /* حركة خفيفة للأسفل وميلان عكسي بسيط */
-            45% { transform: translateY(4px) rotateZ(2deg) scale(0.98); }
-            /* عودة خفيفة */
-            60% { transform: translateY(-5px) rotateZ(-1deg) scale(1.01); }
-            /* استقرار */
-            75% { transform: translateY(0) rotateZ(0deg) scale(1); }
-            
-            /* 80%: Prepare to leave */
-            80% { opacity: 1; transform: translateY(0) rotateY(0deg) scale(1); }
-
-            /* 80% - 93%: Exit (2 seconds) - Spin DOWN */
-            93% { opacity: 0; transform: translateY(150px) rotateY(-180deg) scale(0.1); }
-
-            /* 93% - 100%: Wait (1 second) */
-            100% { opacity: 0; transform: translateY(150px); }
-        }
         
         /* --- Header --- */
         header {
@@ -337,11 +265,6 @@
 <body id="body">
 
     <button class="lang-btn" onclick="toggleLanguage()">عربي / English</button>
-
-    <div class="jordan-widget">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Jordan_national_football_team_logo_2024.svg/960px-Jordan_national_football_team_logo_2024.svg.png" alt="Jordan National Team Logo" class="flag-logo">
-        <div class="cheer-text">دايما معاك</div>
-    </div>
 
     <header>
         <img src="college-logo.png" alt="College Logo" class="header-logo logo-left">
